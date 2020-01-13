@@ -24,6 +24,7 @@ namespace PruebaEntityFramework
     {
         Tema_6Entities contexto;
         CLIENTE c;
+        CollectionViewSource vista;
 
         public MainWindow()
         {
@@ -38,10 +39,21 @@ namespace PruebaEntityFramework
 
             contexto = new Tema_6Entities();
             contexto.CLIENTES.Load();
-            ClientesListBox.DataContext = contexto.CLIENTES.Local;
+
+            vista = new CollectionViewSource();
+            vista.Source = contexto.CLIENTES.Local;
+
+            this.DataContext = contexto.CLIENTES.Local;
             InsertarStackPanel.DataContext = c;
-            EliminarComboBox.DataContext = contexto.CLIENTES.Local;
-            ModificarComboBox.DataContext = contexto.CLIENTES.Local;
+            ClientesDataGrid.DataContext = vista;
+            ClientesVistaDataGrid.DataContext = vista;
+            vista.Filter += Vista_Filter;
+        }
+
+        private void Vista_Filter(object sender, FilterEventArgs e)
+        {
+            CLIENTE c = (CLIENTE)e.Item;
+
 
         }
 
@@ -62,13 +74,17 @@ namespace PruebaEntityFramework
 
         private void ModificarButton_Click(object sender, RoutedEventArgs e)
         {
-            CLIENTE c = (CLIENTE)ModificarComboBox.SelectedValue;
-            c.id = int.Parse(IdentificadorTextBox.Text);
-            c.nombre = NombreTextBox.Text;
-            c.apellido = ApellidoTextBox.Text;
-                
-
             contexto.SaveChanges();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            contexto.SaveChanges();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            vista.View.Refresh();
         }
     }
 }

@@ -17,18 +17,12 @@
     </Window.Resources>
     <Grid>
         <TabControl Margin="10,0,10,0">
-            <TabItem>
-                <TabItem.Header>
-                    ListBox
-                </TabItem.Header>
+            <TabItem Header="ListBox">
                 <ListBox x:Name="ClientesListBox" ItemTemplate="{StaticResource Clientes}" ItemsSource="{Binding}">
-                    
+
                 </ListBox>
             </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    Insertar
-                </TabItem.Header>
+            <TabItem Header="Insertar">
                 <StackPanel x:Name="InsertarStackPanel">
                     <TextBlock Margin="5,10,0,0">Identificador</TextBlock>
                     <TextBox Margin="5,0,5,0" Text="{Binding id}"></TextBox>
@@ -39,19 +33,13 @@
                     <Button x:Name="InsertarButton" Margin="5,10,0,0" Padding="10,0,10,0" HorizontalAlignment="Left" Click="InsertarButton_Click">Insertar</Button>
                 </StackPanel>
             </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    Eliminar
-                </TabItem.Header>
+            <TabItem Header="Eliminar">
                 <StackPanel>
                     <ComboBox x:Name="EliminarComboBox" HorizontalAlignment="Left" Padding="10,0,10,0" Margin="10,10,0,0" ItemsSource="{Binding}" Width="200" DisplayMemberPath="id"></ComboBox>
                     <Button x:Name="EliminarButton" HorizontalAlignment="Left" Padding="10,0,10,0" Margin="10,10,0,0" Click="EliminarButton_Click">Eliminar</Button>
                 </StackPanel>
             </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    Modificar
-                </TabItem.Header>
+            <TabItem Header="Modificar">
                 <StackPanel>
                     <ComboBox x:Name="ModificarComboBox" HorizontalAlignment="Left" Padding="10,0,10,0" Margin="10,10,0,0" ItemsSource="{Binding}" Width="200" DisplayMemberPath="id"></ComboBox>
                     <TextBlock Margin="10,10,0,0">Identificador</TextBlock>
@@ -62,6 +50,30 @@
                     <TextBox x:Name="ApellidoTextBox" Margin="10,0,10,0" Text="{Binding ElementName=ModificarComboBox, Path=SelectedItem.apellido}"></TextBox>
                     <Button x:Name="ModificarButton" HorizontalAlignment="Left" Padding="10,0,10,0" Margin="10,10,0,0" Click="ModificarButton_Click">Modificar</Button>
                 </StackPanel>
+            </TabItem>
+            <TabItem Header="DataGrid">
+                <DockPanel>
+                    <Button DockPanel.Dock="Bottom" HorizontalAlignment="Left" Margin="15" Padding="10,0,10,0" Click="Button_Click">Actualizar</Button>
+                    <DataGrid x:Name="ClientesDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Identificador" Binding="{Binding id}" Width="2*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Nombre" Binding="{Binding nombre}" Width="3*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Apellido" Binding="{Binding apellido}" Width="4*"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Filtrar">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <TextBlock Margin="10,10,0,10">Nombre: </TextBlock>
+                        <TextBox Margin="10,10,0,10" Width="200"></TextBox>
+                        <Button Margin="10,10,0,10" Padding="30,0,30,0" Click="Button_Click_1">Filtrar</Button>
+                    </StackPanel>
+                    <DataGrid x:Name="ClientesVistaDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                        
+                    </DataGrid>
+                </DockPanel>
             </TabItem>
         </TabControl>
     </Grid>
