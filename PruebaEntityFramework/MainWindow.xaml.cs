@@ -38,7 +38,7 @@ namespace PruebaEntityFramework
             };
 
             contexto = new Tema_6Entities();
-            contexto.CLIENTES.Load();
+            contexto.CLIENTES.Include(CLIENTE => CLIENTE.PEDIDOS).Load() ;
 
             vista = new CollectionViewSource();
             vista.Source = contexto.CLIENTES.Local;
@@ -52,9 +52,19 @@ namespace PruebaEntityFramework
 
         private void Vista_Filter(object sender, FilterEventArgs e)
         {
-            CLIENTE c = (CLIENTE)e.Item;
+            CLIENTE item = (CLIENTE)e.Item;
 
-
+            if(FiltroTextBox.Text == "")
+            {
+                e.Accepted = true;
+            }
+            else
+            {
+                if (item.nombre.Contains(FiltroTextBox.Text))
+                    e.Accepted = true;
+                else
+                    e.Accepted = false;
+            }
         }
 
         private void InsertarButton_Click(object sender, RoutedEventArgs e)
@@ -77,12 +87,12 @@ namespace PruebaEntityFramework
             contexto.SaveChanges();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ClientesDataButton_Click(object sender, RoutedEventArgs e)
         {
             contexto.SaveChanges();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void FiltrarButton_Click(object sender, RoutedEventArgs e)
         {
             vista.View.Refresh();
         }
